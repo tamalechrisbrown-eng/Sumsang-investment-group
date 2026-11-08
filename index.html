@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue Wave Company - Invest in Products</title>
+<style>
+:root{--blue:#0052D4;--wave:#00c6ff;--green:#00b894}
+*{box-sizing:border-box}body{margin:0;font-family:'Segoe UI',Arial;background:#f0f7ff}
+.header{background:linear-gradient(135deg,var(--blue),var(--wave));color:white;padding:25px 15px;text-align:center}
+.logo{width:90px;height:90px;background:white;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:45px}
+.box{max-width:460px;margin:15px auto;background:white;padding:18px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.08)}
+input,select{width:100%;padding:13px;margin:7px 0;border:1px solid #dde8ff;border-radius:10px}
+button{padding:13px;background:var(--blue);color:white;border:none;border-radius:10px;font-weight:bold;cursor:pointer;width:100%}
+.btn-sm{padding:8px 12px;width:auto;font-size:12px;border-radius:8px;margin:3px}
+.deposit-box{background:linear-gradient(135deg,#ffeaa7,#fdcb6e);border:2px dashed #e17055;padding:15px;border-radius:12px;text-align:center;margin:12px 0}
+.product-plan{border:1px solid #e3f0ff;border-radius:16px;overflow:hidden;margin:14px 0;background:white}
+.product-img{height:120px;background:#f8fbff;display:flex;align-items:center;justify-content:center;font-size:60px}
+.product-info{padding:12px}
+.tag{display:inline-block;background:#dfe6e9;padding:4px 10px;border-radius:20px;font-size:10px;margin-right:5px}
+.tag.hot{background:#ff7675;color:white}
+.tag.profit{background:var(--green);color:white}
+.wa-float{position:fixed;bottom:20px;right:20px;background:#25D366;color:white;padding:14px 20px;border-radius:50px;text-decoration:none;font-weight:bold;box-shadow:0 5px 15px rgba(0,0,0,0.3);z-index:9999}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="logo">🌊</div>
+<h2>BLUE WAVE COMPANY</h2>
+<small>Real Products Investment - Kampala</small>
+</div>
+
+<div id="auth" class="box">
+<h3>Create Account</h3>
+<input id="name" placeholder="Full Name">
+<input id="email" placeholder="Phone (07...) or Email">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="handleAuth()" id="btn">Register - Get UGX 20k Bonus</button>
+<p style="text-align:center;font-size:13px"><span id="switchText">Have account?</span> <a href="#" onclick="toggle()">Login</a></p>
+<p style="font-size:10px;color:gray;text-align:center">Admin: admin@admin.com / admin123</p>
+</div>
+
+<div id="dash" class="box hidden">
+<div style="display:flex;justify-content:space-between"><h3 style="margin:0">Hi, <span id="uName"></span></h3><a href="#" onclick="logout()" style="font-size:12px">Logout</a></div>
+
+<div style="background:#e3f2fd;padding:14px;border-radius:12px;margin:12px 0;display:flex;justify-content:space-between">
+<div>Balance<br><b style="font-size:20px">UGX <span id="bal">0</span></b></div>
+<button class="btn-sm" style="background:var(--green);width:auto" onclick="document.getElementById('withdrawBox').classList.toggle('hidden')">Withdraw</button>
+</div>
+
+<div id="withdrawBox" class="hidden" style="background:#f1f8ff;padding:12px;border-radius:12px;border:1px solid #74b9ff;margin-bottom:12px">
+<h4 style="margin:0 0 8px">💸 Request Withdrawal</h4>
+<input id="wPhone" placeholder="Your MoMo Number (07...)">
+<input id="wAmount" type="number" placeholder="Amount (Min 10,000)">
+<select id="wMethod"><option>MTN MoMo</option><option>Airtel Money</option></select>
+<button style="background:var(--green)" onclick="requestWithdraw()">Submit Withdraw Request</button>
+<p style="font-size:10px;color:gray">Paid within 2-24 hours to your number</p>
+</div>
+
+<div class="deposit-box">
+<h4 style="margin:0">📲 HOW TO INVEST - SEND MONEY TO:</h4>
+<p style="margin:8px 0 5px;font-size:14px">Official Blue Wave Line:</p>
+<b style="font-size:26px;color:#d63031">0761 291 972</b><br>
+<b style="font-size:15px">Names: BLUE WAVE COMPANY / TAMALE</b><br>
+<b style="font-size:13px">MTN MoMo Uganda</b><br><br>
+<div style="text-align:left;background:white;padding:10px;border-radius:8px;font-size:12px">
+1. Dial *165*1# → Send Money<br>
+2. Enter: <b>0761291972</b><br>
+3. Enter amount (e.g 50000)<br>
+4. Confirm to BLUE WAVE<br>
+5. Copy Transaction ID & confirm below
+</div>
+<button style="background:#e17055;margin-top:10px" onclick="document.getElementById('depositProof').classList.toggle('hidden')">I Have Sent Money - Confirm Deposit</button>
+<div id="depositProof" class="hidden" style="margin-top:10px">
+<input id="dTransId" placeholder="Transaction ID (e.g 123456789)">
+<input id="dPhone" placeholder="Your number that sent money (07...)">
+<input id="dAmount" placeholder="Amount sent (e.g 50000)">
+<button style="background:var(--blue)" onclick="confirmDeposit()">Submit For Confirmation</button>
+</div>
+</div>
+
+<h3>📦 Our Investment Products</h3>
+
+<div class="product-plan"><div class="product-img">📱</div><div class="product-info"><span class="tag hot">STARTER</span><span class="tag profit">15% in 7 Days</span><br><b>Phone Accessories</b><br><small>Invest 50k → Buy chargers/covers, resell. Get 57,500</small><br><button class="btn-sm" style="background:var(--blue)" onclick="investPlan(50000,'Phone Accessories')">Invest 50k</button></div></div>
+
+<div class="product-plan"><div class="product-img">🎧</div><div class="product-info"><span class="tag">BRONZE</span><span class="tag profit">25% in 10 Days</span><br><b>Smart Watches & Earbuds</b><br><small>Invest 100k → Import watches. Return 125,000</small><br><button class="btn-sm" style="background:var(--blue)" onclick="investPlan(100000,'Smart Watches')">Invest 100k</button></div></div>
+
+<div class="product-plan"><div class="product-img">📲</div><div class="product-info"><span class="tag">SILVER</span><span class="tag profit">40% in 14 Days</span><br><b>UK Used Phones</b><br><small>Invest 250k → Import used phones. Return 350k</small><br><button class="btn-sm" style="background:var(--blue)" onclick="investPlan(250000,'Used Phones')">Invest 250k</button></div></div>
+
+<div class="product-plan" style="border:2px solid var(--blue)"><div class="product-img">📱🔥</div><div class="product-info"><span class="tag hot">GOLD POPULAR</span><span class="tag profit">60% in 21 Days</span><br><b>iPhone & Samsung Stock</b><br><small>Invest 500k → Bulk phones Kikuubo. Return 800k</small><br><button class="btn-sm" style="background:#e17055" onclick="investPlan(500000,'iPhone Stock')">Invest 500k</button></div></div>
+
+<div class="product-plan"><div class="product-img">💻</div><div class="product-info"><span class="tag">DIAMOND</span><span class="tag profit">80% in 30 Days</span><br><b>Laptops & TVs</b><br><small>Invest 1M → Laptops business. Return 1.8M</small><br><button class="btn-sm" style="background:var(--blue)" onclick="investPlan(1000000,'Laptops')">Invest 1M</button></div></div>
+
+<div class="product-plan"><div class="product-img">🏪</div><div class="product-info"><span class="tag">PLATINUM</span><span class="tag profit">100% in 30 Days</span><br><b>Shop Partner - Kikuubo</b><br><small>Invest 2.5M → Become shop partner. Return 5M</small><br><button class="btn-sm" style="background:var(--blue)" onclick="investPlan(2500000,'Shop Partner')">Invest 2.5M</button></div></div>
+
+<div class="product-plan" style="background:linear-gradient(135deg,#f6e58d,#f9ca24)"><div class="product-img">👑🏦</div><div class="product-info"><span class="tag hot">VIP</span><span class="tag profit">150% in 45 Days</span><br><b>VIP Wholesale Container</b><br><small>Invest 5M → Container import. Return 12.5M</small><br><button class="btn-sm" style="background:black;color:white" onclick="investPlan(5000000,'VIP Wholesale')">Invest 5M</button></div></div>
+
+<div id="myInv" style="font-size:12px;margin-top:15px;background:#f1f2f6;padding:10px;border-radius:8px"></div>
+</div>
+
+<div id="admin" class="box hidden">
+<h3>ADMIN PANEL - Blue Wave</h3>
+<div style="background:#ffeaa7;padding:10px;border-radius:8px;margin:10px 0">Your MoMo: <b>0761291972</b><br>WhatsApp: <b>0747550170</b></div>
+<div id="userTable" style="font-size:11px"></div>
+<h4>Pending Deposits</h4><div id="adminDeposits" style="font-size:11px"></div>
+<h4>Withdrawal Requests</h4><div id="adminWithdraws" style="font-size:11px"></div>
+<button style="background:#d63031;margin-top:10px" onclick="logout()">Logout</button>
+</div>
+
+<a href="https://wa.me/256747550170?text=Hello%20Blue%20Wave%2C%20I%20sent%20MoMo%20to%200761291972%20Transaction%20ID%3A%20" class="wa-float" target="_blank">💬 WhatsApp: 0747550170</a>
+
+<script>
+function getUsers(){return JSON.parse(localStorage.getItem('all_users')||'[]')}
+function saveUsers(u){localStorage.setItem('all_users',JSON.stringify(u))}
+function getDeposits(){return JSON.parse(localStorage.getItem('deposits')||'[]')}
+function saveDeposits(d){localStorage.setItem('deposits',JSON.stringify(d))}
+function getWithdraws(){return JSON.parse(localStorage.getItem('withdraws')||'[]')}
+function saveWithdraws(w){localStorage.setItem('withdraws',JSON.stringify(w))}
+let isLogin=false;
+function toggle(){isLogin=!isLogin;document.getElementById('btn').innerText=isLogin?'Login':'Register - Get UGX 20k Bonus'}
+function handleAuth(){
+ let name=document.getElementById('name').value.trim();
+ let email=document.getElementById('email').value.trim().toLowerCase();
+ let pass=document.getElementById('pass').value.trim();
+ if(email==='admin@admin.com'&&pass==='admin123'){showAdmin();return}
+ let users=getUsers();
+ if(isLogin){let f=users.find(u=>u.email===email&&u.pass===pass);if(f){localStorage.setItem('current_user',email);showDash(f)}else alert('Wrong details')}
+ else{if(!name){alert('Enter name');return}if(users.find(u=>u.email===email)){alert('Phone exists');return}let nu={name,email,pass,balance:20000,investments:[]};users.push(nu);saveUsers(users);localStorage.setItem('current_user',email);showDash(nu)}
+}
+function showDash(user){document.getElementById('auth').classList.add('hidden');document.getElementById('admin').classList.add('hidden');document.getElementById('dash').classList.remove('hidden');document.getElementById('uName').innerText=user.name;document.getElementById('bal').innerText=user.balance.toLocaleString();document.getElementById('myInv').innerHTML=user.investments.length?'<b>My Investments:</b><br>'+user.investments.map(i=>`📦 ${i.product}: UGX ${i.amount.toLocaleString()} → Expect UGX ${i.expect.toLocaleString()}<br>`).join(''):'No investments yet'}
+function showAdmin(){document.getElementById('auth').classList.add('hidden');document.getElementById('dash').classList.add('hidden');document.getElementById('admin').classList.remove('hidden');let users=getUsers();document.getElementById('userTable').innerHTML=users.map(u=>`${u.name} - ${u.email} - Bal: UGX ${u.balance.toLocaleString()}<br>`).join('')||'No users';let deps=getDeposits();document.getElementById('adminDeposits').innerHTML=deps.map((d,i)=>`${d.email} sent ${d.amount} via ${d.phone} TID:${d.transId} <button onclick="approveDep(${i})">Approve</button><br>`).join('')||'No deposits';let wds=getWithdraws();document.getElementById('adminWithdraws').innerHTML=wds.map(w=>`${w.email} wants ${w.amount} to ${w.phone} (${w.method})<br>`).join('')||'No withdraw requests'}
+function investPlan(amount,product){let email=localStorage.getItem('current_user');let users=getUsers();let idx=users.findIndex(u=>u.email===email);if(users[idx].balance<amount){alert('Low balance! Deposit to 0761291972 first, then Admin approves.');return}let rates={50000:0.15,100000:0.25,250000:0.4,500000:0.6,1000000:0.8,2500000:1,5000000:1.5};let rate=rates[amount]||0.25;users[idx].balance-=amount;let expect=amount+(amount*rate);users[idx].investments.push({amount,product,expect});saveUsers(users);showDash(users[idx]);alert(`Invested in ${product}! DEMO: return in 5 sec`);setTimeout(()=>{let u=getUsers();let i=u.findIndex(x=>x.email===email);if(i>=0){u[i].balance+=expect;saveUsers(u);if(localStorage.getItem('current_user')===email)showDash(u[i]);alert(`💙 ${product} matured! +UGX ${expect.toLocaleString()}`)}},5000)}
+function confirmDeposit(){let email=localStorage.getItem('current_user');let trans=document.getElementById('dTransId').value;let phone=document.getElementById('dPhone').value;let amount=document.getElementById('dAmount').value;if(!trans||!phone||!amount){alert('Fill all');return}let deps=getDeposits();deps.push({email,transId:trans,phone,amount:parseInt(amount),date:new Date().toLocaleString()});saveDeposits(deps);alert('Deposit submitted! Admin (0761291972) will confirm within 10 mins on WhatsApp 0747550170');document.getElementById('depositProof').classList.add('hidden')}
+function approveDep(i){let deps=getDeposits();let dep=deps[i];let users=getUsers();let idx=users.findIndex(u=>u.email===dep.email);if(idx>=0){users[idx].balance+=dep.amount;saveUsers(users)}deps.splice(i,1);saveDeposits(deps);showAdmin();alert('Approved! Added UGX '+dep.amount)}
+function requestWithdraw(){let email=localStorage.getItem('current_user');let phone=document.getElementById('wPhone').value;let amount=parseInt(document.getElementById('wAmount').value);let method=document.getElementById('wMethod').value;if(!phone||!amount){alert('Fill');return}let users=getUsers();let idx=users.findIndex(u=>u.email===email);if(users[idx].balance<amount){alert('Insufficient');return}users[idx].balance-=amount;saveUsers(users);let wds=getWithdraws();wds.push({email,phone,amount,method,date:new Date().toLocaleString()});saveWithdraws(wds);showDash(users[idx]);alert(`Withdrawal UGX ${amount.toLocaleString()} to ${phone} submitted! We will pay from 0761291972 within 2 hours.`);document.getElementById('withdrawBox').classList.add('hidden')}
+function logout(){localStorage.removeItem('current_user');document.getElementById('dash').classList.add('hidden');document.getElementById('admin').classList.add('hidden');document.getElementById('auth').classList.remove('hidden')}
+</script>
+</body>
+  </html>🏠 Rental Houses - Invest 3M → Return 6M in 60 days
